@@ -104,8 +104,8 @@ class ProjectStorage:
             conn.commit()
 
 # Exemplo de uso
-if __name__ == "__main__":
-    storage = ProjectStorage()
+# if __name__ == "__main__":
+#     storage = ProjectStorage()
 
     # Criar novo projeto
     # new_project = ProjectModel(id=None, name="Project Alpha", icon="icon.png", banner="banner.png", wallet="0xABC123", bio="Bio of Project Alpha", project_type=True, descript="Description of Project Alpha")
@@ -113,18 +113,20 @@ if __name__ == "__main__":
     # new_project.id = project_id
 
     # Obter projeto pelo ID
-    project = storage.get_project(1)
-    print(project)
+    # project = storage.get_project(1)
+    # print(project)
 
     # Atualizar projeto
     # if project:
-    #     project.name = "Updated Project Alpha"
+    #     project.bio = "Testando atualização"
     #     storage.update_project(project)
 
     # Obter todos os projetos
     # all_projects = storage.get_all_projects()
-    # for proj in all_projects:
-    #     print(proj)
+    # for project in all_projects:
+    #     print(project)
 
-    # Deletar projeto
+    # # Deletar projeto
+    # delete_project_id = 1
+    # storage.delete_project(delete_project_id)
     
