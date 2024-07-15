@@ -1,9 +1,11 @@
 from model.ProjectModel import ProjectModel
+from storage.ProjectStorage import ProjectStorage
 
 class ProjectService:
     def __init__(self):
         self.projects = []
-
+        self.storage = ProjectStorage()
+        
     def validate_project(self, project: ProjectModel) -> bool:
         if not project.wallet:
             raise ValueError("Wallet address is required")
@@ -24,11 +26,8 @@ class ProjectService:
 
     def add_project(self, project: ProjectModel):
         if self.validate_project(project):
-            self.projects.append(project)
+            self.storage.add_project(project)
             print(f"Project {project.name} has been added.")
 
     def get_project_by_id(self, project_id: int) -> ProjectModel:
-        for project in self.projects:
-            if project.id == project_id:
-                return project
-        return None
+        self.storage.get_project(project_id)
