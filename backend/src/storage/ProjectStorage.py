@@ -7,7 +7,10 @@ def adapt_datetime(ts):
     return ts.strftime('%Y-%m-%d %H:%M:%S')
 
 def convert_datetime(s):
-    return datetime.datetime.strptime(s.decode('utf-8'), '%Y-%m-%d %H:%M:%S')
+    try:
+        return datetime.datetime.strptime(s.decode('utf-8'), '%Y-%m-%d %H:%M:%S.%f')
+    except ValueError:
+        return datetime.datetime.strptime(s.decode('utf-8'), '%Y-%m-%d %H:%M:%S')
 
 sqlite3.register_adapter(datetime.datetime, adapt_datetime)
 sqlite3.register_converter("timestamp", convert_datetime)
@@ -105,13 +108,13 @@ if __name__ == "__main__":
     storage = ProjectStorage()
 
     # Criar novo projeto
-    new_project = ProjectModel(id=None, name="Project Alpha", icon="icon.png", banner="banner.png", wallet="0xABC123", bio="Bio of Project Alpha", project_type=True, descript="Description of Project Alpha")
-    project_id = storage.add_project(new_project)
-    new_project.id = project_id
+    # new_project = ProjectModel(id=None, name="Project Alpha", icon="icon.png", banner="banner.png", wallet="0xABC123", bio="Bio of Project Alpha", project_type=True, descript="Description of Project Alpha")
+    # project_id = storage.add_project(new_project)
+    # new_project.id = project_id
 
     # Obter projeto pelo ID
-    # project = storage.get_project(project_id)
-    # print(project)
+    project = storage.get_project(1)
+    print(project)
 
     # Atualizar projeto
     # if project:
