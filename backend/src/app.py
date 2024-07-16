@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify
-from src.model.ProjectModel import ProjectModel
-from src.service.ProjectService import ProjectService
+from model.ProjectModel import ProjectModel
+from service.ProjectService import ProjectService
 
 app = Flask(__name__)
 
@@ -11,7 +11,6 @@ def add_project():
     data = request.get_json()
     try:
         project = ProjectModel(
-            id=data.get('id'),
             name=data.get('name'),
             icon=data.get('icon'),
             banner=data.get('banner'),
@@ -22,6 +21,8 @@ def add_project():
         )
         project_service.add_project(project)
         return jsonify({'message': 'Project added successfully!'}), 201
+    except AttributeError as e:
+        return jsonify({'error': 'AttributeError: ' + str(e)}), 400
     except ValueError as e:
         return jsonify({'error': str(e)}), 400
 

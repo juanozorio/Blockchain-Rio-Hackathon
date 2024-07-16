@@ -16,10 +16,10 @@ class ProjectService:
         if not project.bio or not isinstance(project.bio, str) or len(project.bio.strip()) == 0:
             raise ValueError("Bio is required and must be a non-empty string")
         
-        if not isinstance(project.projecttype, bool):
+        if not isinstance(project.project_type, bool):
             raise ValueError("Project type must be a boolean value")
         
-        if not project.descript or not isinstance(project.descript, str) or len(project.descript.strip()) == 0:
+        if not project.description or not isinstance(project.description, str) or len(project.description.strip()) == 0:
             raise ValueError("Description is required and must be a non-empty string")
         
         return True
@@ -30,4 +30,4 @@ class ProjectService:
             print(f"Project {project.name} has been added.")
 
     def get_project_by_id(self, project_id: int) -> ProjectModel:
-        self.storage.get_project(project_id)
+        return self.storage.get_project(project_id)
