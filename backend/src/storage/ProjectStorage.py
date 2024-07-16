@@ -18,7 +18,7 @@ sqlite3.register_converter("timestamp", convert_datetime)
 
 # Classe de modelo
 class ProjectModel:
-    def __init__(self, id: Optional[int], name: str, icon: str, banner: str, wallet: str, bio: str, project_type: bool, descript: str, created_at: datetime.datetime = None, updated_at: datetime.datetime = None):
+    def __init__(self, id: Optional[int], name: str, icon: str, banner: str, wallet: str, bio: str, project_type: bool, description: str, created_at: datetime.datetime = None, updated_at: datetime.datetime = None):
         self.id = id
         self.name = name
         self.icon = icon
@@ -26,7 +26,7 @@ class ProjectModel:
         self.wallet = wallet
         self.bio = bio
         self.project_type = project_type
-        self.descript = descript
+        self.description = description
         self.created_at = created_at or datetime.datetime.now()
         self.updated_at = updated_at or datetime.datetime.now()
 
@@ -55,7 +55,7 @@ class ProjectStorage:
                 wallet TEXT NOT NULL,
                 bio TEXT,
                 project_type BOOLEAN NOT NULL,
-                descript TEXT,
+                description TEXT,
                 created_at TIMESTAMP NOT NULL,
                 updated_at TIMESTAMP NOT NULL
             )
@@ -68,7 +68,7 @@ class ProjectStorage:
             cursor.execute("""
             INSERT INTO projects (name, icon, banner, wallet, bio, project_type, descript, created_at, updated_at)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-            """, (project.name, project.icon, project.banner, project.wallet, project.bio, project.project_type, project.descript, project.created_at, project.updated_at))
+            """, (project.name, project.icon, project.banner, project.wallet, project.bio, project.project_type, project.description, project.created_at, project.updated_at))
             conn.commit()
             return cursor.lastrowid
 
@@ -95,7 +95,7 @@ class ProjectStorage:
             UPDATE projects
             SET name = ?, icon = ?, banner = ?, wallet = ?, bio = ?, project_type = ?, descript = ?, created_at = ?, updated_at = ?
             WHERE id = ?
-            """, (project.name, project.icon, project.banner, project.wallet, project.bio, project.project_type, project.descript, project.created_at, project.updated_at, project.id))
+            """, (project.name, project.icon, project.banner, project.wallet, project.bio, project.project_type, project.description, project.created_at, project.updated_at, project.id))
             conn.commit()
 
     def delete_project(self, project_id: int):
