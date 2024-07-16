@@ -4,7 +4,7 @@ from src.model.ProjectModel import ProjectModel
 #Exemplo de uso
 if __name__ == "__main__":
       storage = ProjectStorage()
-      new_project = ProjectModel(name="Project Alpha", icon="icon.png", banner="banner.png", wallet="0xABC123", bio="Bio of Project Alpha", project_type=True, descript="Description of Project Alpha")
+      new_project = ProjectModel(name="Project Alpha", icon="icon.png", banner="banner.png", wallet="0xABC123", bio="Bio of Project Alpha", project_type=True, description="Description of Project Alpha")
       project_id = storage.add_project(new_project)
       print(project_id)
     # new_project.id = project_id
