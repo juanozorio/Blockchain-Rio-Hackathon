@@ -1,43 +1,58 @@
+
 from flask import Flask, request, jsonify
-from model.ProjectModel import ProjectModel
 from service.ProjectService import ProjectService
-import logging
+from storage.ProjectStorage import ProjectStorage
+import datetime
 
 app = Flask(__name__)
-app.logger.setLevel(logging.DEBUG)
-
-project_service = ProjectService()
+storage = ProjectStorage()
+service = ProjectService(storage)
 
 @app.route('/projects', methods=['POST'])
-def add_project():
-    data = request.get_json()
-    app.logger.debug(f"Received data: {data}")
-    try:
-        project = ProjectModel(
-            name=data.get('name'),
-            icon=data.get('icon'),
-            banner=data.get('banner'),
-            wallet=data.get('wallet'),
-            bio=data.get('bio'),
-            project_type=bool(data.get('project_type')),
-            description=data.get('description')
-        )
-        app.logger.debug(f"Created ProjectModel: {project}")
-        project_service.add_project(project)
-        return jsonify({'message': 'Project added successfully!'}), 201
-    except AttributeError as e:
-        app.logger.error(f"AttributeError: {e}")
-        return jsonify({'error': 'AttributeError: ' + str(e)}), 400
-    except ValueError as e:
-        app.logger.error(f"ValueError: {e}")
-        return jsonify({'error': str(e)}), 400
+def create_project():
+    data = request.json
+    project_id = service.create_project(
+        name=data['name'],
+        icon=data.get('icon', ''),
+        banner=data.get('banner', ''),
+        wallet=data['wallet'],
+        bio=data.get('bio', ''),
+        project_type=data['project_type'],
+        description=data.get('description', '')
+    )
+    return jsonify({'id': project_id}), 201
 
-@app.route('/projects/<int:id>', methods=['GET'])
-def get_project_by_id(id):
-    project = project_service.get_project_by_id(id)
+@app.route('/projects/<int:project_id>', methods=['GET'])
+def get_project(project_id):
+    project = service.get_project(project_id)
     if project:
-        return jsonify(project.to_dict())
+        return jsonify(project.__dict__), 200
     return jsonify({'error': 'Project not found'}), 404
+
+@app.route('/projects', methods=['GET'])
+def get_all_projects():
+    projects = service.get_all_projects()
+    return jsonify([project.__dict__ for project in projects]), 200
+
+@app.route('/projects/<int:project_id>', methods=['PUT'])
+def update_project(project_id):
+    data = request.json
+    service.update_project(
+        project_id,
+        name=data['name'],
+        icon=data.get('icon', ''),
+        banner=data.get('banner', ''),
+        wallet=data['wallet'],
+        bio=data.get('bio', ''),
+        project_type=data['project_type'],
+        description=data.get('description', '')
+    )
+    return jsonify({'message': 'Project updated successfully'}), 200
+
+@app.route('/projects/<int:project_id>', methods=['DELETE'])
+def delete_project(project_id):
+    service.delete_project(project_id)
+    return jsonify({'message': 'Project deleted successfully'}), 200
 
 if __name__ == '__main__':
     app.run(debug=True)

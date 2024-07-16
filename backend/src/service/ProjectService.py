@@ -1,33 +1,43 @@
+# service/ProjectService.py
+from typing import List, Optional
 from model.ProjectModel import ProjectModel
 from storage.ProjectStorage import ProjectStorage
+import datetime
 
 class ProjectService:
-    def __init__(self):
-        self.projects = []
-        self.storage = ProjectStorage()
-        
-    def validate_project(self, project: ProjectModel) -> bool:
-        if not project.wallet:
-            raise ValueError("Wallet address is required")
-        
-        if not project.name or not isinstance(project.name, str) or len(project.name.strip()) == 0:
-            raise ValueError("Project name is required and must be a non-empty string")
+    def __init__(self, storage: ProjectStorage):
+        self.storage = storage
 
-        if not project.bio or not isinstance(project.bio, str) or len(project.bio.strip()) == 0:
-            raise ValueError("Bio is required and must be a non-empty string")
-        
-        if not isinstance(project.project_type, bool):
-            raise ValueError("Project type must be a boolean value")
-        
-        if not project.description or not isinstance(project.description, str) or len(project.description.strip()) == 0:
-            raise ValueError("Description is required and must be a non-empty string")
-        
-        return True
+    def create_project(self, name: str, icon: str, banner: str, wallet: str, bio: str, project_type: bool, description: str) -> int:
+        project = ProjectModel(
+            name=name,
+            icon=icon,
+            banner=banner,
+            wallet=wallet,
+            bio=bio,
+            project_type=project_type,
+            description=description
+        )
+        return self.storage.add_project(project)
 
-    def add_project(self, project: ProjectModel):
-        if self.validate_project(project):
-            self.storage.add_project(project)
-            print(f"Project {project.name} has been added.")
+    def get_project(self, project_id: int) -> Optional[ProjectModel]:
+        return self.storage.get_project_id(project_id)
 
-    def get_project_by_id(self, project_id: int) -> ProjectModel:
-        return self.storage.get_project(project_id)
+    def get_all_projects(self) -> List[ProjectModel]:
+        return self.storage.get_all_projects()
+
+    def update_project(self, project_id: int, name: str, icon: str, banner: str, wallet: str, bio: str, project_type: bool, description: str):
+        project = self.storage.get_project_id(project_id)
+        if project:
+            project.name = name
+            project.icon = icon
+            project.banner = banner
+            project.wallet = wallet
+            project.bio = bio
+            project.project_type = project_type
+            project.description = description
+            project.updated_at = datetime.datetime.now()
+            self.storage.update_project(project)
+
+    def delete_project(self, project_id: int):
+        self.storage.delete_project(project_id)

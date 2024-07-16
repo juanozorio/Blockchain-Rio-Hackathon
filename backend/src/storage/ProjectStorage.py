@@ -1,8 +1,8 @@
 import sqlite3
 import datetime
-import logging
 from typing import List, Optional
 from model.ProjectModel import ProjectModel
+
 # Registrando adaptadores e conversores de datetime
 def adapt_datetime(ts):
     return ts.strftime('%Y-%m-%d %H:%M:%S')
@@ -50,7 +50,7 @@ class ProjectStorage:
             conn.commit()
             return cursor.lastrowid
 
-    def get_project(self, project_id: int) -> Optional[ProjectModel]:
+    def get_project_id(self, project_id: int) -> Optional[ProjectModel]:
         with sqlite3.connect(self.db_name, detect_types=sqlite3.PARSE_DECLTYPES) as conn:
             cursor = conn.cursor()
             cursor.execute("SELECT * FROM projects WHERE id = ?", (project_id,))
@@ -81,6 +81,3 @@ class ProjectStorage:
             cursor = conn.cursor()
             cursor.execute("DELETE FROM projects WHERE id = ?", (project_id,))
             conn.commit()
-
-
-    
