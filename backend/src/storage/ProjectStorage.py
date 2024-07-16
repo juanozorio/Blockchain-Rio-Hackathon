@@ -55,7 +55,7 @@ class ProjectStorage:
                 wallet TEXT NOT NULL,
                 bio TEXT,
                 project_type BOOLEAN NOT NULL,
-                descript TEXT,
+                description TEXT,
                 created_at TIMESTAMP NOT NULL,
                 updated_at TIMESTAMP NOT NULL
             )
@@ -95,7 +95,7 @@ class ProjectStorage:
             UPDATE projects
             SET name = ?, icon = ?, banner = ?, wallet = ?, bio = ?, project_type = ?, descript = ?, created_at = ?, updated_at = ?
             WHERE id = ?
-            """, (project.name, project.icon, project.banner, project.wallet, project.bio, project.project_type, project.descript, project.created_at, project.updated_at, project.id))
+            """, (project.name, project.icon, project.banner, project.wallet, project.bio, project.project_type, project.description, project.created_at, project.updated_at, project.id))
             conn.commit()
 
     def delete_project(self, project_id: int):
