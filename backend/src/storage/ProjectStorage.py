@@ -56,7 +56,18 @@ class ProjectStorage:
             cursor.execute("SELECT * FROM projects WHERE id = ?", (project_id,))
             row = cursor.fetchone()
             if row:
-                return ProjectModel(*row)
+                return ProjectModel(
+                    id=row[0],
+                    name=row[1],
+                    icon=row[2],
+                    banner=row[3],
+                    wallet=row[4],
+                    bio=row[5],
+                    project_type=row[6],
+                    description=row[7],
+                    created_at=row[8],
+                    updated_at=row[9]
+                )
             return None
 
     def get_all_projects(self) -> List[ProjectModel]:
@@ -64,7 +75,20 @@ class ProjectStorage:
             cursor = conn.cursor()
             cursor.execute("SELECT * FROM projects")
             rows = cursor.fetchall()
-            return [ProjectModel(*row) for row in rows]
+            return [
+                ProjectModel(
+                    id=row[0],
+                    name=row[1],
+                    icon=row[2],
+                    banner=row[3],
+                    wallet=row[4],
+                    bio=row[5],
+                    project_type=row[6],
+                    description=row[7],
+                    created_at=row[8],
+                    updated_at=row[9]
+                ) for row in rows
+            ]
 
     def update_project(self, project: ProjectModel):
         with sqlite3.connect(self.db_name, detect_types=sqlite3.PARSE_DECLTYPES) as conn:
