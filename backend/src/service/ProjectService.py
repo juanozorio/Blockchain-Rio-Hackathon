@@ -8,6 +8,18 @@ class ProjectService:
     def __init__(self, storage: ProjectStorage):
         self.storage = storage
 
+     # FUNÇÃO QUE VALIDA OS DADOS DE INSERÇÃO DO PROJETO NÃO PERMITINDO QUE OS VALORES SEJAM INSERIDOS EM BRANCO
+    def validate_project(self, project: ProjectModel) -> bool:
+        if not project.wallet:
+            raise ValueError("Wallet address is required")
+        if not project.name:
+            raise ValueError("Name is required")
+        if not project.bio:
+            raise ValueError("Bio is required")
+        if not project.description:
+            raise ValueError("Description is required")
+        return True
+    
     def create_project(self, name: str, icon: str, banner: str, wallet: str, bio: str, project_type: bool, description: str) -> int:
         project = ProjectModel(
             name=name,
@@ -18,6 +30,7 @@ class ProjectService:
             project_type=project_type,
             description=description
         )
+        self.validate_project(project)
         return self.storage.add_project(project)
 
     def get_project(self, project_id: int) -> Optional[ProjectModel]:
