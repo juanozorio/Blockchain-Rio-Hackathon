@@ -1,0 +1,72 @@
+.carousel .carousel-slider {
+    background-color: #000;
+  }
+  
+  .carousel .control-arrow,
+  .carousel.carousel-slider .control-arrow {
+    opacity: 0.5;
+    transition: all 0.3s;
+  }
+  
+  .carousel .control-arrow:hover {
+    opacity: 1;
+  }
+  
+  .carousel .control-next.control-arrow:before {
+    border-left: 8px solid white;
+  }
+  
+  .carousel .control-prev.control-arrow:before {
+    border-right: 8px solid white;
+  }
+  
+  .carousel .thumb {
+    border: 2px solid #fff;
+  }
+  
+  .slide {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .image {
+    width: 40%;
+    height: auto;
+    max-width: 300px;
+  }
+  
+  .textContainer {
+    width: 40%;
+    padding: 2rem;
+    color: #212121;
+    text-align: left;
+  }
+  
+  .textContainer h2 {
+    margin: 0;
+    font-size: 2rem;
+    text-align: center;
+  }
+  
+  .textContainer p {
+    margin: 0.5rem 0 0;
+    font-size: 1.2rem;
+    text-align: justify;
+  }
+
+  .btn{
+    text-transform: uppercase;
+    display: flex;
+    justify-content: center;
+    align-items: end;
+    border: 2px solid #212121;
+    border-radius: 0.2rem;
+    width: 100%;
+    padding: 1%;
+    background-color: #212121;
+    color: #f6f6f6;
+    font-weight: bold;
+    margin-top: 5%;
+  }
+  
