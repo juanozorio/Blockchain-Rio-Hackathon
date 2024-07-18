@@ -3,13 +3,24 @@ from typing import List, Optional
 from model.ProjectModel import ProjectModel
 from storage.ProjectStorage import ProjectStorage
 import datetime
+import re
 
 class ProjectService:
-    def __init__(self, storage: ProjectStorage):
-        self.storage = storage
-
+    
+    storage = ProjectStorage()
+    
+    def is_valid_ethereum_address(self,address: str) -> bool:
+        pattern = r'^0x[a-fA-F0-9]{40}$'
+        if re.match(pattern, address):
+            return True
+        else:
+            return False
+    
      # FUNÇÃO QUE VALIDA OS DADOS DE INSERÇÃO DO PROJETO NÃO PERMITINDO QUE OS VALORES SEJAM INSERIDOS EM BRANCO
     def validate_project(self, project: ProjectModel) -> bool:
+        sucess = self.is_valid_ethereum_address(project.wallet)
+        if not sucess:
+            raise ValueError("Invalid Adress ethereum")
         if not project.wallet:
             raise ValueError("Wallet address is required")
         if not project.name:

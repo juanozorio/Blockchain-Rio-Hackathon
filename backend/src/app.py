@@ -1,12 +1,10 @@
 from flask import Flask, request, jsonify
 from service.ProjectService import ProjectService
-from storage.ProjectStorage import ProjectStorage
 from collections import OrderedDict
 import datetime
 
 app = Flask(__name__)
-storage = ProjectStorage()
-service = ProjectService(storage)
+service = ProjectService()
 
 def format_project(project):
     return OrderedDict([
@@ -34,8 +32,9 @@ def create_project():
         project_type=data['project_type'],
         description=data.get('description', '')
     )
-    return jsonify({'id': project_id}), 201
-
+    if project_id:
+        return jsonify({'id': project_id}), 201
+    
 @app.route('/projects/<int:project_id>', methods=['GET'])
 def get_project(project_id):
     project = service.get_project(project_id)
