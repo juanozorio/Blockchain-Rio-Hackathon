@@ -19,6 +19,9 @@
     "web3": "^4.11.0"
   },
   "devDependencies": {
+    "@babel/preset-react": "^7.0.0",
+    "@babel/preset-env": "^7.0.0",
+    "next/babel": "^9.0.0",
     "eslint": "^8",
     "eslint-config-next": "14.2.5",
     "postcss": "^8",
