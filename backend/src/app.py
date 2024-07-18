@@ -23,17 +23,19 @@ def format_project(project):
 @app.route('/projects', methods=['POST'])
 def create_project():
     data = request.json
-    project_id = service.create_project(
-        name=data['name'],
-        icon=data.get('icon', ''),
-        banner=data.get('banner', ''),
-        wallet=data['wallet'],
-        bio=data.get('bio', ''),
-        project_type=data['project_type'],
-        description=data.get('description', '')
-    )
-    if project_id:
+    try:
+        project_id = service.create_project(
+            name=data['name'],
+            icon=data.get('icon', ''),
+            banner=data.get('banner', ''),
+            wallet=data['wallet'],
+            bio=data.get('bio', ''),
+            project_type=data['project_type'],
+            description=data.get('description', '')
+        )
         return jsonify({'id': project_id}), 201
+    except Exception as e:
+        return jsonify({'error': f'An unexpected error occurred: {str(e)}'}), 400
     
 @app.route('/projects/<int:project_id>', methods=['GET'])
 def get_project(project_id):
