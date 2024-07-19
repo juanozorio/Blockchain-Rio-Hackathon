@@ -2,9 +2,11 @@ import { Carousel } from 'react-responsive-carousel';
 import { useState } from 'react';
 import { getMetaMaskProvider, getBalance, transfer } from '../../common/MetaMaskService';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
-import styles from './CarouselBanner.module.css';
+// import styles from './CarouselBanner.module.css';
+import styles from './Projects.module.css';
 
-const CarouselBanner = () => {
+const Projects = () => {
+
   const [address, setAddress] = useState("");
   const [to, setTo] = useState("");
   const [quantity, setQuantity] = useState("");
@@ -47,15 +49,15 @@ const CarouselBanner = () => {
           <br />
           Quantity: <input className={styles.input} type='text' value={quantity} onChange={(evt) => setQuantity(evt.target.value)} /> */}
           <button className={styles.btn} onClick={() => getMetaMaskProvider()}>Doe</button>
-          <br />
-          {/* <button className={styles.btn} onClick={getBalanceClick}>Get Balance</button>
+          {/* <br />
+          <button className={styles.btn} onClick={getBalanceClick}>Get Balance</button>
           <br />
           <button className={styles.btn} onClick={transferClick}>Transfer</button>
-          <br />
-          {message} */}
+          <br /> */}
+          {message}
         </div>
       </div>
-      <div className={styles.slide}>
+      {/* <div className={styles.slide}>
         <img src="/images/image2.jpg" alt="Slide 2" className={styles.image} />
         <div className={styles.textContainer}>
           <h2>Nebula Web3</h2>
@@ -65,9 +67,9 @@ const CarouselBanner = () => {
           <button className={styles.btn} onClick={() => getMetaMaskProvider()}>Doe</button>
 
         </div>
-      </div>
+      </div> */}
     </Carousel>
   );
 };
 
-export default CarouselBanner;
+export default Projects;
