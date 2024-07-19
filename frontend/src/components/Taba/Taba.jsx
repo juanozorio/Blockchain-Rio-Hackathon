@@ -11,8 +11,8 @@ const Taba = (props) => (
       enableBackground: "new 0 0 500 200",
     }}
     xmlSpace="preserve"
-    width={100}
-    height={40}
+    width={180}
+    height={60}
     {...props}
   >
     <style type="text/css">{".st0{fill:#FFFFFF;}"}</style>
