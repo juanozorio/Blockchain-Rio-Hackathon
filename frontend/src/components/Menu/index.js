@@ -1,27 +1,25 @@
 import Link from 'next/link';
 import styles from './Menu.module.css';
 import { FaSearch } from 'react-icons/fa';
+import Taba from '../Taba/Taba';
 
 const Menu = () => {
   return (
-    <nav className={styles.nav}>
-      <ul className={styles.menu}>
-        <li className={styles.menuItem}>
-          <a href='./'>BLC.KRIA</a>
+    <nav className="p-6 flex justify-around max-w-full max-h-26 pt-16 ">
+      <ul className="align-center flex items-center text-xl text-cyan-50 gap-20 ">
+      <Taba/>
+        <li className="border-b-2 px-2 pb-2 border-transparent hover:border-cyan-50">
+          Home
         </li>
-        <li className={styles.searchBar}>
-          <input type="text" placeholder="Pesquisar projetos..." />
-          <FaSearch className={styles.searchIcon} />
+        <li className="border-b-2 px-2 pb-2 border-transparent hover:border-cyan-50">
+          About us
         </li>
-        <li className={styles.menuItem}>
-          <Link href="/IniciarProjeto">Iniciar Projeto </Link>
+        <li className="border-b-2 px-2 pb-2 border-transparent hover:border-cyan-50">
+          <Link href="/IniciarProjeto">Projects </Link>
         </li>
-        {/* <li className={styles.menuItem}>
-          Services
+        <li className="border-b-2 px-2 pb-2 border-transparent hover:border-cyan-50">
+          Contact Us
         </li>
-        <li className={styles.menuItem}>
-          Contact
-        </li> */}
       </ul>
     </nav>
   );
