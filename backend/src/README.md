@@ -1,5 +1,5 @@
 ### Formato Json de Post
-
+```plaintext
 {
     "name": "Charles",
     "icon": "icon_url",
@@ -9,3 +9,4 @@
     "project_type": true,
     "description": "Project description"
 }
+```
