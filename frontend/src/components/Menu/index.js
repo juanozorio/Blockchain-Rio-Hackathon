@@ -11,10 +11,10 @@ const Menu = () => {
           Home
         </li>
         <li className="flex-1 text-center border-b-2 px-4 py-2 border-transparent hover:border-cyan-50">
-          About us
+          <Link href="/AboutUs">About Us</Link>
         </li>
         <li className="flex-1 text-center border-b-2 px-4 py-2 border-transparent hover:border-cyan-50">
-          <Link href="/IniciarProjeto">Projects</Link>
+          Projects
         </li>
         <li className="flex-1 text-center border-b-2 px-4 py-2 border-transparent hover:border-cyan-50">
           Contact Us
