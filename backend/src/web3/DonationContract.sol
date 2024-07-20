@@ -1,32 +1,35 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-contract DonationContract {
-    address public platformWallet; // Carteira da plataforma para receber a taxa
-    uint public constant TAX_RATE = 15; // Taxa de 15%
+import "@chainlink/contracts/src/v0.8/ChainlinkClient.sol";
 
-    constructor(address _platformWallet) {
+contract DonationContract is ChainlinkClient {
+    address public platformWallet;
+    uint public constant TAX_RATE = 15;
+    bytes32 private jobId;
+    uint256 private fee;
+    address private oracle;
+
+    mapping(bytes32 => address) public projectWallets;
+
+    constructor(address _platformWallet, address _oracle, bytes32 _jobId, uint256 _fee, address _linkToken) {
         platformWallet = _platformWallet;
+        oracle = _oracle;
+        jobId = _jobId;
+        fee = _fee;
+        setChainlinkToken(_linkToken);
     }
 
-    function donate(address payable projectWallet, bool isSocialProject) public payable {
-        uint amount = msg.value; // Valor enviado na transação
-
-        if (isSocialProject) {
-            // Transferir o valor total para a carteira do projeto
-            projectWallet.transfer(amount);
-        } else {
-            // Calcular a taxa
-            uint taxAmount = (amount * TAX_RATE) / 100;
-            uint donationAmount = amount - taxAmount;
-
-            // Transferir a taxa para a carteira da plataforma
-            payable(platformWallet).transfer(taxAmount);
-            // Transferir o valor restante para a carteira do projeto
-            projectWallet.transfer(donationAmount);
-        }
+    function requestProjectWalletValidation(string memory projectId) public returns (bytes32 requestId) {
+        Chainlink.Request memory request = buildChainlinkRequest(jobId, address(this), this.fulfill.selector);
+        request.add("projectId", projectId);
+        requestId = sendChainlinkRequestTo(oracle, request, fee);
+        projectWallets[requestId] = msg.sender; // Associar a carteira do solicitante com o requestId
+        return requestId;
     }
 
-    // Função para receber doações diretas
-    receive() external payable {}
+    function fulfill(bytes32 _requestId, bool _isValid) public recordChainlinkFulfillment(_requestId) {
+        require(_isValid, "Invalid project wallet");
+        // Continuação da lógica após validação
+    }
 }
