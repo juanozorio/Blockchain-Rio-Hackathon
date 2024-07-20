@@ -4,7 +4,7 @@ import ethers, { BrowserProvider, Contract, parseEther, Wallet, formatEther } fr
 import { getMetaMaskProvider, getBalance, transfer } from '../../common/MetaMaskService';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import styles from './CarouselBanner.module.css';
-// import contractData from '../../resources/DonationContract.json';
+import contractData from '../../app/resources/DonationContract.json';
 
 const CarouselBanner = () => {
   const [address, setAddress] = useState("");
@@ -13,15 +13,18 @@ const CarouselBanner = () => {
   const [message, setMessage] = useState("");
   const [platformBalance, setPlatformBalance] = useState(0.0);
 
-  const PLATFORM_ADDRESS = "0xF65D2bF4887C92031A3d33De95C536a5F765c8f6" // endereço da plataforma, pode ser trocado por um select que vai pegar os endereços do banco e exibir uma lista de endereços para o usuário que vai doar poder escolher para quem doará
-  const DONATION_AMOUT = "0.1" // valor da doação
-
+  const PROJECT_WALLET = "0xAb8483F64d9C6d1EcF9b849Ae677dD3315835cb2" // endereço da carteira que recebe a doação, pode ser trocado por um select que vai pegar os endereços do banco e exibir uma lista de endereços para o usuário que vai doar poder escolher para quem doará
+  const DONATION_AMOUNT = "0.1" // valor da doação
+  const PLATFORM_WALLET = "0x04EdbfB6D677605aAD0962e62eBBE0d95c84101e" //ENDEREÇO DA PLATAFORMA 0x0b82B600b20868093420BB7623e2D35Fb67D9844
+  
   function getBalanceClick() {
-    getBalance("0x0b82B600b20868093420BB7623e2D35Fb67D9844")
+    getBalance(PROJECT_WALLET)
       .then(balance => setMessage(balance))
+      .catch(err => setMessage(err.message))
   }
 
   function transferClick() {
+    console.log("TransferClick")
     transfer(address, //de - from
       to, //para - to
       quantity) //valor - quantity
@@ -41,11 +44,12 @@ const CarouselBanner = () => {
             signer
         );
 
+        //Executar a transação de doação.
         const tx = await contract.donate(
-            PLATFORM_ADDRESS, // pra quem vai a doação
-            true, // se é social ou não
+            PROJECT_WALLET, // pra quem vai a doação
+            false, // se é social ou não
             {
-                value: parseEther(DONATION_AMOUT),
+                value: parseEther(DONATION_AMOUNT),
                 gasLimit: 3000000
             }
         );
@@ -57,14 +61,14 @@ const CarouselBanner = () => {
         console.log(tx);
     } catch (error) {
         console.error("Falha ao fazer a doação:", error);
-        setMessage('Erro na doação, verifique o console.');
+        setMessage(`Erro na doação, verifique o console.`);
     }
 }
 
 
   const getPlatformBalance = async () => {
     const provider = new BrowserProvider(window.ethereum);
-    let balance = (await getBalance(PLATFORM_ADDRESS)).toString();
+    let balance = (await getBalance(PLATFORM_WALLET)).toString();
     balance = formatEther(balance);
     balance = parseFloat(balance).toFixed(2);
     setPlatformBalance(balance);
@@ -98,17 +102,17 @@ const CarouselBanner = () => {
           <br />
           <p>Preparamos jovens de alto potencial em comunidades de baixa renda para uma carreira em tecnologia.</p>
 
-          {/* Wallet: <input className={styles.input} type='text' value={address} onChange={(evt) => setAddress(evt.target.value)} />
+          Wallet: <input className={styles.input} type='text' value={address} onChange={(evt) => setAddress(evt.target.value)} />
           <br />
           To: <input className={styles.input} type='text' value={to} onChange={(evt) => setTo(evt.target.value)} />
           <br />
-          Quantity: <input className={styles.input} type='text' value={quantity} onChange={(evt) => setQuantity(evt.target.value)} /> */}
+          Quantity: <input className={styles.input} type='text' value={quantity} onChange={(evt) => setQuantity(evt.target.value)} />
           <button className={styles.btn} onClick={() => donate()}>Doe</button>
-          {/* <br />
+          <br />
           <button className={styles.btn} onClick={getBalanceClick}>Get Balance</button>
           <br />
           <button className={styles.btn} onClick={transferClick}>Transfer</button>
-          <br /> */}
+          <br />
           <span style={{color: 'white'}}>
             {message}
           </span>
