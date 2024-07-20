@@ -1,10 +1,10 @@
-import React from 'react';
-import styles from './Card.module.css';
+import React from "react";
+import styles from "./Card.module.css";
 
-const Card = ({ title, description, imageUrl }) => {
+
+const Card = ({ title, description, Image }) => {
   return (
     <div className={styles.card}>
-      <img src={imageUrl} alt={title} className={styles.image} />
       <div className={styles.overlay}>
         <div className={styles.text}>
           <h2 className={styles.title}>{title}</h2>
