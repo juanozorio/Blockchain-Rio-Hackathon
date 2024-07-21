@@ -9,15 +9,10 @@ import Footer from '@/components/Footer';
 export default function Home() {
   return (
     <>
-      <Menu className="flex justify-end max-w-xl" />
       <SubMenu />
-      <main>
       <CarouselBanner />
 
-        <Card description={'aloha caption'} title={'title aqui'} />
-
-        <Footer />
-      </main>
+      <Card description={'aloha caption'} title={'title aqui'} />
     </>
   );
 }
