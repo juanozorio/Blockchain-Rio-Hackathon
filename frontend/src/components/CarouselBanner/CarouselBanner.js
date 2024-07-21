@@ -90,7 +90,7 @@ const CarouselBanner = () => {
       className={styles.carousel}
     >
       <div className={styles.slide}>
-        <img src="/images/image1.jpg" alt="Slide 1" className={styles.image} />
+        <img src="/images/plataforma-logo.jpg" alt="Slide 1" className={styles.image} />
         <div className={styles.textContainer}>
           {/* SALDO DA PLATAFORMA, TÁ MOCKADO NO CENTRO DA TELA PORQUE EU SOU CEGO (leia gritando) */}
           <h1 style={{position: 'absolute', top: '50%', left: '50%', color: 'white'}}>

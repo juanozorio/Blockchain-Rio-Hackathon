@@ -6,12 +6,18 @@ import Footer from "@/components/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
+export const metadata = {
+  title: "TABA",
+};
+
 export default function RootLayout({ children }) {
   return (
     <html lang="pt-br">
-      <Menu className="flex justify-end max-w-xl" />
-        <body className={inter.className}>{children}</body>
-      <Footer />
+      <body className={inter.className}>
+        <Menu className="flex justify-end max-w-xl"/>
+        {children}
+        <Footer />
+      </body>
     </html>
   );
 }
