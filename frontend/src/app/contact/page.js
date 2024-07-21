@@ -1,6 +1,10 @@
+import Slider from '@/components/Slider'
+
 const Projects = () => {
   return (
-    <h1>CONTATO CONTATO CONTATO</h1>
+    <>
+      <Slider />
+    </>
   );
 };
 

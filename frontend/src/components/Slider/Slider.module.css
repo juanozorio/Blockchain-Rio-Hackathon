@@ -1,0 +1,38 @@
+.card {
+    padding: 1rem 0;
+    width: 300px;
+    background: green;
+  }
+  
+  .cardHeader {
+    padding: 0.5rem 1rem 0 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .textTiny {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    font-weight: bold;
+  }
+  
+  .textDefault500 {
+    color: #6b7280;
+  }
+  
+  .textLarge {
+    font-size: 1.25rem;
+    font-weight: bold;
+  }
+  
+  .cardBody {
+    overflow: visible;
+    padding-top: 0.5rem;
+  }
+  
+  .image {
+    object-fit: cover;
+    border-radius: 0.75rem;
+  }
+  
